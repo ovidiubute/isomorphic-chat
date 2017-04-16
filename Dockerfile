@@ -12,7 +12,7 @@ RUN yarn
 COPY . /usr/src/app
 
 # Receive traffic
-EXPOSE 7001
+EXPOSE 80
 
 # Start backend service
 CMD [ "yarn", "server-start-production" ]
