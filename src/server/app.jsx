@@ -7,7 +7,7 @@ import path from "path";
 // Client dependencies
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { MainChat } from "../client";
+import MainChat from "../client/main-chat";
 
 const app = new Koa();
 
@@ -20,7 +20,7 @@ render(app, {
 });
 
 // Koa static handler
-app.use(serve(`${__dirname}/../client/dist/`));
+app.use(serve(`${__dirname}/../../dist/`));
 
 // Koa main handler
 app.use(async ctx => {
@@ -41,8 +41,7 @@ if (process.env.NODE_ENV === "test") {
   module.exports = app.callback();
 } else {
   app.listen(7001);
-  console.log("open http://localhost:7001");
 }
 
 // Error handler
-app.on("error", err => console.log(err.stack));
+app.on("error", err => console.error(err.stack));
