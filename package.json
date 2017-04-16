@@ -17,7 +17,8 @@
     "build-client": "webpack --bail --config src/client/webpack.config.dev.babel.js",
     "build-client-watch": "webpack --bail --config src/client/webpack.config.dev.babel.js --watch",
     "build-client-production": "webpack --bail --config src/client/webpack.config.prod.babel.js",
-    "start": "yarn build-client && node src/server/"
+    "start": "yarn build-client && node src/server/",
+    "precommit": "lint-staged"
   },
   "babel": {
     "presets": [
@@ -36,7 +37,6 @@
     "prettier": "^1.1.0",
     "webpack": "^2.4.1"
   },
-  "precommit": "lint-staged",
   "lint-staged": {
     "*.js": [
       "prettier --write",
