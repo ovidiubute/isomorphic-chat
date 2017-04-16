@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === "test") {
   // ES6 exports not allowed in a dynamic context
   module.exports = app.callback();
 } else {
-  app.listen(process.env.NODE_ENV === "development" ? 7001 : 80);
+  app.listen(7001);
 }
 
 // Error handler
