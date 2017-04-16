@@ -1,0 +1,46 @@
+{
+  "name": "isomorphic-chat",
+  "version": "1.0.0",
+  "description": "Isomorphic chat built with React",
+  "main": "src/server/index.js",
+  "repository": "https://github.com/ovidiubute/isomorphic-chat",
+  "author": "Ovidiu Bute <ovidiu.bute@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.2.0",
+    "koa-ejs": "^4.0.0",
+    "koa-static": "^3.0.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "scripts": {
+    "build-client": "webpack --bail --config src/client/webpack.config.dev.babel.js",
+    "build-client-watch": "webpack --bail --config src/client/webpack.config.dev.babel.js --watch",
+    "build-client-production": "webpack --bail --config src/client/webpack.config.prod.babel.js",
+    "start": "yarn build-client && node src/server/"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "husky": "^0.13.3",
+    "lint-staged": "^3.4.0",
+    "prettier": "^1.1.0",
+    "webpack": "^2.4.1"
+  },
+  "precommit": "lint-staged",
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
