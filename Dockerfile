@@ -18,4 +18,4 @@ COPY . /usr/src/app
 EXPOSE 7001
 
 # Start backend service
-CMD [ "yarn", "server-boot" ]
+CMD [ "yarn", "server-start-production" ]
