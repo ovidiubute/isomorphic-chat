@@ -8,10 +8,13 @@ WORKDIR /usr/src/app
 ADD package.json yarn.lock /usr/src/app/
 RUN yarn
 
+# Build client bundle
+CMD [ "yarn", "client-build-production" ]
+
 # Bundle app source
 COPY . /usr/src/app
 
-# Receive traffic
+# Expose internal port
 EXPOSE 7001
 
 # Start backend service
