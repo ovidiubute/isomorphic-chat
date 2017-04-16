@@ -11,6 +11,10 @@ RUN yarn
 # Build client bundle
 CMD [ "yarn", "client-build-production" ]
 
+# Copy client bundle
+RUN mkdir /usr/src/app/dist
+COPY dist/prod /usr/src/app/dist
+
 # Bundle app source
 COPY . /usr/src/app
 
