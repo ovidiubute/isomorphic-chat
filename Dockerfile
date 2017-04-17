@@ -4,8 +4,8 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-ADD package.json /usr/src/package.json
-ADD yarn.lock /usr/src/yarn.lock
+ADD package.json /usr/src/app/package.json
+ADD yarn.lock /usr/src/app/yarn.lock
 RUN yarn
 
 # Copy source
