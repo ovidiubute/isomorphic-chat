@@ -51,7 +51,7 @@
     "prettier": "^1.1.0"
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,jsx}": [
       "prettier --write",
       "eslint src/**/*.js",
       "git add"
