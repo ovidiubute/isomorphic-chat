@@ -1,25 +1,17 @@
 FROM node:7.9.0
 
-# Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-ADD package.json yarn.lock /usr/src/app/
+ADD package.json /usr/src/package.json
+ADD yarn.lock /usr/src/yarn.lock
 RUN yarn
 
-# Build client bundle
-CMD [ "yarn", "client-build-production" ]
+# Copy source
+ADD . /usr/src/app
 
-# Copy client bundle
-RUN mkdir /usr/src/app/dist
-ADD dist/ /usr/src/app/
-
-# Bundle app source
-COPY . /usr/src/app
-
-# Expose internal port
 EXPOSE 7001
 
 # Start backend service
-CMD [ "yarn", "server-start-production" ]
+CMD [ "npm", "run", "server-start-production" ]

@@ -1,10 +1,13 @@
 // Backend dependencies
 import Koa from "koa";
 import render from "koa-ejs";
-import serve from "koa-static";
 import path from "path";
 
 // Client dependencies
+import webpack from "webpack";
+import MemoryFs from 'memory-fs';
+import webpackConfig from "../client/webpack.config.prod.babel";
+import devWebpackConfig from "../client/webpack.config.dev.babel";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import MainChat from "../client/main-chat";
@@ -19,19 +22,45 @@ render(app, {
   cache: true
 });
 
-// Koa static handler
-app.use(serve(`${__dirname}/../../dist/`));
+/**
+ * Compiles the client bundle in-memory.
+ * @returns {Promise}
+ */
+function compileBundle() {
+  const config = process.env.NODE_ENV === "production" ? webpackConfig : devWebpackConfig;
+  const compiler = webpack(config);
+  compiler.outputFileSystem = new MemoryFs();
+
+  return new Promise((resolve, reject) => {
+    compiler.run((err, stats) => {
+      if (err) return reject(err)
+
+      if (stats.hasErrors() || stats.hasWarnings()) {
+        return reject(new Error(stats.toString({
+          errorDetails: true,
+          warnings: true
+        })))
+      }
+
+      const result = compiler.outputFileSystem.data['client.bundle.js'].toString();
+      resolve(result);
+    })
+  })
+}
+
+// Compile the bundle and save it
+app.use(async (ctx, next) => {
+  if (!app.clientWebBundle) {
+    app.clientWebBundle = await compileBundle();
+  }
+  return next();
+});
 
 // Koa main handler
 app.use(async ctx => {
-  let clientBundleUrl = "/dev/client.dev.bundle.js";
-  if (process.env.NODE_ENV === "production") {
-    clientBundleUrl = "/prod/client.bundle.js";
-  }
-
   await ctx.render("main", {
     reactOutput: renderToString(<MainChat />),
-    clientBundleUrl
+    clientBundle: app.clientWebBundle
   });
 });
 

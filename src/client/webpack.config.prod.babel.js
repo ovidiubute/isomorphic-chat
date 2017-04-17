@@ -4,7 +4,7 @@ import webpack from "webpack";
 export default {
   entry: path.resolve(__dirname, "./app.jsx"),
   output: {
-    path: path.resolve(__dirname, "..", "..", "dist", "prod"),
+    path: "/",
     filename: "client.bundle.js"
   },
   module: {
@@ -15,5 +15,12 @@ export default {
       }
     ]
   },
-  plugins: [new webpack.optimize.UglifyJsPlugin()]
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production")
+      }
+    })
+  ]
 };
