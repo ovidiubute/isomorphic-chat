@@ -1,6 +1,6 @@
 {
   "name": "isomorphic-chat",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Isomorphic chat built with React",
   "main": "src/server/index.js",
   "repository": "https://github.com/ovidiubute/isomorphic-chat",
