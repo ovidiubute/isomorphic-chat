@@ -16,7 +16,9 @@ class MainChat extends React.Component {
       username: `anon-${props.socket.id}`
     }));
 
-    this.props.socket.on("message", this.receiveMessage);
+    if (this.props.socket) {
+      this.props.socket.on("message", this.receiveMessage);
+    }
   }
 
   onKeyUp = e => {
