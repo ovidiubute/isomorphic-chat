@@ -12,11 +12,10 @@ class MainChat extends React.Component {
   }
 
   componentWillMount() {
-    this.setState((prevState, props) => ({
-      username: `anon-${props.socket.id}`
-    }));
-
     if (this.props.socket) {
+      this.setState((prevState, props) => ({
+        username: `anon-${props.socket.id}`
+      }));
       this.props.socket.on("message", this.receiveMessage);
     }
   }
