@@ -14,9 +14,25 @@ const app = new Koa();
 const io = new IO();
 io.attach(app);
 
+// Init Redis connection
+const pub = require("redis").createClient({
+  host: "redis"
+});
+const sub = require("redis").createClient({
+  host: "redis"
+});
+
+// Subscribe to receive all messages on channel
+sub.subscribe("main-channel");
+
+sub.on("message", (channel, message) => {
+  // Broadcasts to all connections
+  io.broadcast("message", message);
+});
+
+// On incoming socket message, publish to Redis
 io.on("message", ctx => {
-  // Broadcasts to all other connections
-  io.broadcast("message", ctx.data);
+  pub.publish("main-channel", ctx.data);
 });
 
 // Render the main layout file using EJS
