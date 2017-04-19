@@ -25,5 +25,9 @@
   },
   "rules": {
     "prettier/prettier": "error"
+  },
+  "globals": {
+    "document": true,
+    "window": true
   }
 }

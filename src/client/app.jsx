@@ -2,4 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import MainChat from "./main-chat";
 
-ReactDOM.render(<MainChat />, document.getElementById("root"));
+const socket = require("socket.io-client")();
+
+ReactDOM.render(<MainChat socket={socket} />, document.getElementById("root"));
