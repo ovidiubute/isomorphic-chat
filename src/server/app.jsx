@@ -16,10 +16,10 @@ io.attach(app);
 
 // Init Redis connection
 const pub = require("redis").createClient({
-  host: "redis"
+  host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
 });
 const sub = require("redis").createClient({
-  host: "redis"
+  host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
 });
 
 // Subscribe to receive all messages on channel
