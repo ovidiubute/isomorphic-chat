@@ -3,20 +3,37 @@ import IO from "koa-socket";
 import render from "koa-ejs";
 import path from "path";
 import React from "react";
+import { createClient } from "redis";
 import { renderToString } from "react-dom/server";
 import compileBundle from "./compile-bundle";
 import MainChat from "../client/main-chat";
 
+// Init Redis connection
+const pub = createClient({
+  host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
+});
+const sub = createClient({
+  host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
+});
+
+// Subscribe to receive all messages on channel
+sub.subscribe("main-channel");
+
 // Init backend app
 const app = new Koa();
-
 // Init socket.io chat endpoint
 const io = new IO();
+
 io.attach(app);
 
+sub.on("message", (channel, message) => {
+  // Broadcasts to all connections
+  io.broadcast("message", message);
+});
+
+// On incoming socket message, publish to Redis
 io.on("message", ctx => {
-  // Broadcasts to all other connections
-  io.broadcast("message", ctx.data);
+  pub.publish("main-channel", ctx.data);
 });
 
 // Render the main layout file using EJS

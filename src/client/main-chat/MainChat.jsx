@@ -37,7 +37,7 @@ class MainChat extends React.Component {
       <div>
         <input type="text" defaultValue="Hey" onKeyUp={this.onKeyUp} />
         <ul>
-          {this.state.messages.map(m => <li>{m}</li>)}
+          {this.state.messages.map((m, i) => <li key={`msg-${i}`}>{m}</li>)}
         </ul>
       </div>
     );
