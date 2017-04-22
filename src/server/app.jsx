@@ -3,15 +3,16 @@ import IO from "koa-socket";
 import render from "koa-ejs";
 import path from "path";
 import React from "react";
+import { createClient } from "redis";
 import { renderToString } from "react-dom/server";
 import compileBundle from "./compile-bundle";
 import MainChat from "../client/main-chat";
 
 // Init Redis connection
-const pub = require("redis").createClient({
+const pub = createClient({
   host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
 });
-const sub = require("redis").createClient({
+const sub = createClient({
   host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
 });
 
