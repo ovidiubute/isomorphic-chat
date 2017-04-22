@@ -7,13 +7,6 @@ import { renderToString } from "react-dom/server";
 import compileBundle from "./compile-bundle";
 import MainChat from "../client/main-chat";
 
-// Init backend app
-const app = new Koa();
-
-// Init socket.io chat endpoint
-const io = new IO();
-io.attach(app);
-
 // Init Redis connection
 const pub = require("redis").createClient({
   host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
@@ -24,6 +17,13 @@ const sub = require("redis").createClient({
 
 // Subscribe to receive all messages on channel
 sub.subscribe("main-channel");
+
+// Init backend app
+const app = new Koa();
+// Init socket.io chat endpoint
+const io = new IO();
+
+io.attach(app);
 
 sub.on("message", (channel, message) => {
   // Broadcasts to all connections
