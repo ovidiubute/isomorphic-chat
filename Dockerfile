@@ -14,5 +14,5 @@ ADD . /usr/src/app
 
 EXPOSE 7001
 
-# Start
-CMD [ "npm", "run", "server-start-production" ]
+# Start backend
+CMD [ "yarn", "server-start-production" ]

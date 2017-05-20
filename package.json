@@ -49,7 +49,7 @@
     "lint": "./node_modules/.bin/eslint --ext js,jsx src/*",
     "precommit": "lint-staged",
     "server-start": "node src/server/",
-    "server-start-production": "NODE_ENV=production node src/server/",
+    "server-start-production": "NODE_ENV=production yarn client-build-production && node src/server/",
     "server-start-watch": "nodemon -L --watch src src/server/",
     "start": "./node_modules/.bin/concurrently --kill-others \"yarn client-build-watch\" \"yarn server-start-watch\"",
     "test": "jest"
