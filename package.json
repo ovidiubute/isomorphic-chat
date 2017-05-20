@@ -6,6 +6,22 @@
   "repository": "https://github.com/ovidiubute/isomorphic-chat",
   "author": "Ovidiu Bute <ovidiu.bute@gmail.com>",
   "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^7.2.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-prettier": "^1.6.0",
+    "eslint-plugin-flowtype": "^2.30.4",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-prettier": "^2.0.1",
+    "eslint-plugin-react": "^6.10.3",
+    "husky": "^0.13.3",
+    "jest": "^20.0.3",
+    "lint-staged": "^3.4.0",
+    "prettier": "^1.1.0",
+    "webpack": "^2.4.1"
+  },
   "dependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
@@ -16,14 +32,13 @@
     "koa": "^2.2.0",
     "koa-ejs": "^4.0.0",
     "koa-socket": "^4.4.0",
-    "memory-fs": "^0.4.1",
+    "koa-static": "^3.0.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "redis": "^2.7.1",
-    "socket.io-client": "^1.7.3",
-    "webpack": "^2.4.1"
+    "socket.io-client": "^1.7.3"
   },
   "scripts": {
     "client-build": "webpack --bail --config src/client/webpack.config.dev.babel.js",
@@ -32,9 +47,9 @@
     "server-start": "nodemon src/server/",
     "server-start-watch": "nodemon src/server/",
     "server-start-production": "NODE_ENV=production node src/server/",
-    "start": "yarn build-client && node src/server/",
+    "start": "yarn client-build-watch && yarn server-start-watch",
     "precommit": "lint-staged",
-    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "lint": "./node_modules/.bin/eslint --ext js,jsx src/*",
     "test": "jest"
   },
   "babel": {
@@ -51,24 +66,9 @@
       ]
     ]
   },
-  "devDependencies": {
-    "babel-eslint": "^7.2.2",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-config-prettier": "^1.6.0",
-    "eslint-plugin-flowtype": "^2.30.4",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-prettier": "^2.0.1",
-    "eslint-plugin-react": "^6.10.3",
-    "husky": "^0.13.3",
-    "jest": "^20.0.3",
-    "lint-staged": "^3.4.0",
-    "prettier": "^1.1.0"
-  },
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint --fix",
+      "./node_modules/.bin/eslint --fix",
       "git add"
     ]
   }

@@ -1,19 +1,19 @@
 import Koa from "koa";
 import IO from "koa-socket";
 import render from "koa-ejs";
+import serve from "koa-static";
 import path from "path";
 import React from "react";
 import { createClient } from "redis";
 import { renderToString } from "react-dom/server";
-import compileBundle from "./compile-bundle";
 import MainChat from "../client/main-chat";
 
 // Init Redis connection
 const pub = createClient({
-  host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
+  host: "redis"
 });
 const sub = createClient({
-  host: process.env.NODE_ENV === "production" ? "redis" : "127.0.0.1"
+  host: "redis"
 });
 
 // Subscribe to receive all messages on channel
@@ -44,20 +44,13 @@ render(app, {
   cache: true
 });
 
-// Compile client bundle and cache it for future requests
-app.use(async (ctx, next) => {
-  if (!app.clientWebBundle) {
-    app.clientWebBundle = await compileBundle();
-  }
-
-  await next();
-});
+// Koa static handler
+app.use(serve(path.resolve(__dirname, "/src/client/dist")));
 
 // Koa main handler
 app.use(async ctx => {
   await ctx.render("main", {
-    reactOutput: renderToString(<MainChat />),
-    clientBundle: app.clientWebBundle
+    reactOutput: renderToString(<MainChat />)
   });
 });
 

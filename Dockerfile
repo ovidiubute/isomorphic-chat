@@ -13,5 +13,5 @@ ADD . /usr/src/app
 
 EXPOSE 7001
 
-# Start backend service
-CMD [ "npm", "run", "server-start-production" ]
+# Start
+CMD [ "npm", "run", "start" ]
