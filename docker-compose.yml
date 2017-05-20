@@ -1,0 +1,18 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+  couchdb:
+    image: couchdb:latest
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - "80:7001"
+    depends_on:
+      - redis
+      - couchdb
+    volumes:
+      - ./src/:/usr/src/app/src/
+

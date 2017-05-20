@@ -15,4 +15,4 @@ ADD . /usr/src/app
 EXPOSE 7001
 
 # Start
-CMD [ "npm", "run", "server-start-production" ]
+CMD [ "yarn", "start" ]
