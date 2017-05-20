@@ -1,0 +1,36 @@
+couchdb:
+  autoredeploy: false
+  environment:
+    - COUCHDB_PASSWORD=fancypassword
+    - COUCHDB_USER=admin
+  image: 'couchdb:1.6.1'
+  ports:
+    - '5984:5984'
+  restart: on-failure
+  tags:
+    - production
+  target_num_containers: 1
+redis:
+  autoredeploy: false
+  image: 'redis:3.0.7'
+  ports:
+    - '6379:6379'
+  restart: on-failure
+  tags:
+    - production
+  target_num_containers: 1
+web:
+  autoredeploy: true
+  deployment_strategy: high_availability
+  image: 'ledovi/isomorphic-chat:latest'
+  links:
+    - couchdb
+    - redis
+  ports:
+    - '80:7001'
+  restart: on-failure
+  sequential_deployment: true
+  tags:
+    - production
+  target_num_containers: 2
+

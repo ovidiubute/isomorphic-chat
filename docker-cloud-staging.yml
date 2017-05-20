@@ -1,0 +1,25 @@
+couchdb:
+  environment:
+    - COUCHDB_PASSWORD=falafel
+    - COUCHDB_USER=admin
+  image: 'couchdb:latest'
+  ports:
+    - '5984:5984'
+  restart: on-failure
+  tags:
+    - staging
+web:
+  autoredeploy: true
+  deployment_strategy: high_availability
+  image: 'ledovi/isomorphic-chat:staging'
+  links:
+    - couchdb
+    - 'redis.redis-staging:redis'
+  ports:
+    - '80:7001'
+  restart: on-failure
+  sequential_deployment: true
+  tags:
+    - staging
+  target_num_containers: 2
+
