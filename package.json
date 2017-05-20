@@ -20,6 +20,7 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
     "redis": "^2.7.1",
     "socket.io-client": "^1.7.3",
     "webpack": "^2.4.1"
@@ -33,7 +34,8 @@
     "server-start-production": "NODE_ENV=production node src/server/",
     "start": "yarn build-client && node src/server/",
     "precommit": "lint-staged",
-    "lint": "./node_modules/.bin/eslint src/**/*.js"
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "test": "jest"
   },
   "babel": {
     "presets": [
@@ -60,13 +62,13 @@
     "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^6.10.3",
     "husky": "^0.13.3",
+    "jest": "^20.0.3",
     "lint-staged": "^3.4.0",
     "prettier": "^1.1.0"
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "prettier --write",
-      "eslint src/**/*.js",
+      "eslint --fix",
       "git add"
     ]
   }

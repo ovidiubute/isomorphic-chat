@@ -35,10 +35,14 @@ class MainChat extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" defaultValue="Hey" onKeyUp={this.onKeyUp} />
         <ul>
-          {this.state.messages.map((m, i) => <li key={`msg-${i}`}>{m}</li>)}
+          {this.state.messages.map(m => <li>{m}</li>)}
         </ul>
+        <input
+          type="text"
+          placeholder="Type something..."
+          onKeyUp={this.onKeyUp}
+        />
       </div>
     );
   }
