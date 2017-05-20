@@ -8,6 +8,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^7.2.2",
+    "concurrently": "^3.4.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-prettier": "^1.6.0",
@@ -19,6 +20,7 @@
     "husky": "^0.13.3",
     "jest": "^20.0.3",
     "lint-staged": "^3.4.0",
+    "nodemon": "^1.11.0",
     "prettier": "^1.1.0",
     "webpack": "^2.4.1"
   },
@@ -41,30 +43,16 @@
     "socket.io-client": "^1.7.3"
   },
   "scripts": {
-    "client-build": "webpack --bail --config src/client/webpack.config.dev.babel.js",
-    "client-build-watch": "webpack --bail --config src/client/webpack.config.dev.babel.js --watch",
-    "client-build-production": "webpack --bail --config src/client/webpack.config.prod.babel.js",
-    "server-start": "nodemon src/server/",
-    "server-start-watch": "nodemon src/server/",
-    "server-start-production": "NODE_ENV=production node src/server/",
-    "start": "yarn client-build-watch && yarn server-start-watch",
-    "precommit": "lint-staged",
+    "client-build": "webpack --bail --config src/client/webpack/webpack.config.dev.babel.js",
+    "client-build-production": "webpack --bail --config src/client/webpack/webpack.config.prod.babel.js",
+    "client-build-watch": "webpack --config src/client/webpack/webpack.config.dev.babel.js --watch",
     "lint": "./node_modules/.bin/eslint --ext js,jsx src/*",
+    "precommit": "lint-staged",
+    "server-start": "node src/server/",
+    "server-start-production": "NODE_ENV=production node src/server/",
+    "server-start-watch": "nodemon src/server/",
+    "start": "./node_modules/.bin/concurrently --kill-others \"yarn client-build-watch\" \"yarn server-start-watch\"",
     "test": "jest"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ],
-    "plugins": [
-      [
-        "transform-class-properties",
-        {
-          "spec": true
-        }
-      ]
-    ]
   },
   "lint-staged": {
     "*.{js,jsx}": [
