@@ -1,0 +1,16 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+  couchdb:
+    image: couchdb:latest
+  web:
+    build: .
+    ports:
+      - "80:7001"
+    depends_on:
+      - redis
+      - couchdb
+    volumes:
+      - ./src/client/dist:/usr/src/app/src/client/dist
+
