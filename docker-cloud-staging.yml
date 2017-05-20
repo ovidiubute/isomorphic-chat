@@ -2,7 +2,7 @@ couchdb:
   environment:
     - COUCHDB_PASSWORD=falafel
     - COUCHDB_USER=admin
-  image: 'couchdb:latest'
+  image: 'couchdb:1.6.1'
   ports:
     - '5984:5984'
   restart: on-failure
