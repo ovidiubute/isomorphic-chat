@@ -1,12 +1,12 @@
-import Koa from "koa";
-import IO from "koa-socket";
-import render from "koa-ejs";
-import serve from "koa-static";
-import path from "path";
-import React from "react";
-import { createClient } from "redis";
-import { renderToString } from "react-dom/server";
-import MainChat from "../client/main-chat";
+const Koa = require("koa");
+const IO = require("koa-socket");
+const render = require("koa-ejs");
+const serve = require("koa-static");
+const path = require("path");
+const React = require("react");
+const { createClient } = require("redis");
+const { renderToString } = require("react-dom/server");
+const MainChat = require("../client/main-chat").default;
 
 // Init Redis connection
 const pub = createClient({
@@ -36,7 +36,7 @@ io.on("message", ctx => {
   pub.publish("main-channel", ctx.data);
 });
 
-// Render the main layout file using EJS
+// Attach render middleware
 render(app, {
   root: path.join(__dirname, "view"),
   layout: "template",
@@ -45,12 +45,12 @@ render(app, {
 });
 
 // Koa static handler
-app.use(serve(path.resolve(__dirname, "/src/client/dist")));
+app.use(serve(path.resolve(__dirname, "..", "client", "dist")));
 
 // Koa main handler
 app.use(async ctx => {
   await ctx.render("main", {
-    reactOutput: renderToString(<MainChat />)
+    reactOutput: renderToString(React.createElement(MainChat))
   });
 });
 
