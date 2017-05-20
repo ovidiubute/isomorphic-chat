@@ -1,4 +1,5 @@
 FROM node:7.10.0
+MAINTAINER Ovidiu Bute <ovidiu.bute@gmail.com>
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

@@ -14,5 +14,5 @@ services:
       - redis
       - couchdb
     volumes:
-      - ./:/usr/src/app/
+      - ./src/:/usr/src/app/src/
 
