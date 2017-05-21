@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
 import React from "react";
 
 class MainChat extends React.Component {
@@ -6,8 +7,9 @@ class MainChat extends React.Component {
     super(props);
 
     this.state = {
-      messages: [],
-      username: null
+      messages: this.props.messages || [],
+      username: null,
+      input: ""
     };
   }
 
@@ -22,13 +24,26 @@ class MainChat extends React.Component {
 
   onKeyUp = e => {
     if (e.keyCode === 13) {
-      this.props.socket.emit("message", e.target.value);
+      this.props.socket.emit("message", {
+        userId: `anon-${this.props.socket.id}`,
+        msg: this.state.input
+      });
+
+      this.setState({
+        input: ""
+      });
     }
+  };
+
+  onInputChange = e => {
+    this.setState({
+      input: e.target.value
+    });
   };
 
   receiveMessage = message => {
     this.setState(prevState => ({
-      messages: prevState.messages.concat(message)
+      messages: prevState.messages.concat(JSON.parse(message))
     }));
   };
 
@@ -36,12 +51,20 @@ class MainChat extends React.Component {
     return (
       <div>
         <ul>
-          {this.state.messages.map(m => <li>{m}</li>)}
+          {this.state.messages.map(m => (
+            <li key={m._id}>
+              <p>
+                {`${m.userId} : ${m.msg}`}
+              </p>
+            </li>
+          ))}
         </ul>
         <input
           type="text"
           placeholder="Type something..."
+          value={this.state.input}
           onKeyUp={this.onKeyUp}
+          onChange={this.onInputChange}
         />
       </div>
     );

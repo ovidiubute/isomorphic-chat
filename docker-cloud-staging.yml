@@ -1,10 +1,7 @@
-couchdb:
-  environment:
-    - COUCHDB_PASSWORD=falafel
-    - COUCHDB_USER=admin
-  image: 'couchdb:latest'
+mongodb:
+  image: 'bitnami/mongodb:latest'
   ports:
-    - '5984:5984'
+    - '27017:27017'
   restart: on-failure
   tags:
     - staging

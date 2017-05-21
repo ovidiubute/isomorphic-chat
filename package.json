@@ -8,6 +8,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^7.2.2",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
     "concurrently": "^3.4.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
@@ -35,11 +37,13 @@
     "koa-ejs": "^4.0.0",
     "koa-socket": "^4.4.0",
     "koa-static": "^3.0.0",
+    "mongodb": "^2.2.26",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "redis": "^2.7.1",
+    "regenerator-runtime": "^0.10.5",
     "socket.io-client": "^1.7.3"
   },
   "scripts": {

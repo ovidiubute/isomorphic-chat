@@ -13,22 +13,19 @@
     "prettier"
   ],
   "parserOptions": {
-    "ecmaVersion": 2016,
+    "ecmaVersion": 2017,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "env": {
+    "browser": true,
     "es6": true,
     "node": true,
     "jest": true
   },
   "rules": {
     "prettier/prettier": "error"
-  },
-  "globals": {
-    "document": true,
-    "window": true
   }
 }

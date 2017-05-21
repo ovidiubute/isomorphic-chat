@@ -1,1 +1,1 @@
-export { default } from "./MainChat.jsx";
+export { default } from "./main-chat";
