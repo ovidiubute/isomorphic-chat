@@ -8,6 +8,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^7.2.2",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
     "concurrently": "^3.4.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
@@ -35,6 +37,7 @@
     "koa-ejs": "^4.0.0",
     "koa-socket": "^4.4.0",
     "koa-static": "^3.0.0",
+    "nano": "^6.3.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

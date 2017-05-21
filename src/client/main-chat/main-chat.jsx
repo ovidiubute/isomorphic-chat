@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
 import React from "react";
 
 class MainChat extends React.Component {
@@ -22,7 +23,10 @@ class MainChat extends React.Component {
 
   onKeyUp = e => {
     if (e.keyCode === 13) {
-      this.props.socket.emit("message", e.target.value);
+      this.props.socket.emit("message", {
+        userId: `anon-${this.props.socket.id}`,
+        msg: e.target.value
+      });
     }
   };
 
@@ -36,7 +40,13 @@ class MainChat extends React.Component {
     return (
       <div>
         <ul>
-          {this.state.messages.map(m => <li>{m}</li>)}
+          {this.state.messages.map(m => (
+            <li key={m._id}>
+              <p>
+                {`${m.userId} : ${m.msg}`}
+              </p>
+            </li>
+          ))}
         </ul>
         <input
           type="text"

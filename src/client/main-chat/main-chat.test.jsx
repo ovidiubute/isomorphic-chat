@@ -1,10 +1,10 @@
 import React from "react";
 import ReactShallowRenderer from "react-test-renderer/shallow";
-import MainChat from "./MainChat";
+import MainChat from "./main-chat";
 
 describe("MainChat", () => {
   it("should render in empty state", () => {
-    const r = new ReactShallowRenderer();
+    const r = ReactShallowRenderer.createRenderer();
     r.render(<MainChat />);
 
     const result = r.getRenderOutput();
