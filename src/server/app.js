@@ -74,8 +74,9 @@ MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
     cache: true
   });
 
-  // Koa static handler
+  // Koa static handlers
   app.use(serve(path.resolve(__dirname, "..", "client", "dist")));
+  app.use(serve(path.resolve(__dirname, "..", "client", "public")));
 
   // Koa main handler
   app.use(async ctx => {
