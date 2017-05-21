@@ -21,7 +21,14 @@ MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
    * to serve as starting point for SSR of our app
    */
   async function getLastMessages() {
-    return db.collection("messages").find({}).limit(10).toArray();
+    return db
+      .collection("messages")
+      .find({})
+      .sort({
+        timestamp: -1
+      })
+      .limit(10)
+      .toArray();
   }
 
   // Init Redis connection
@@ -77,7 +84,7 @@ MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
     await ctx.render("main", {
       reactOutput: renderToString(
         React.createElement(MainChat, {
-          messages
+          messages: messages.reverse() // Note that this reverses in-place
         })
       ),
       __state_messages__: JSON.stringify(messages)
