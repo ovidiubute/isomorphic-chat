@@ -37,7 +37,7 @@
     "koa-ejs": "^4.0.0",
     "koa-socket": "^4.4.0",
     "koa-static": "^3.0.0",
-    "nano": "^6.3.0",
+    "mongodb": "^2.2.26",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
