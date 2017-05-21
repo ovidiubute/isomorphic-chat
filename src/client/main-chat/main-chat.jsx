@@ -7,8 +7,9 @@ class MainChat extends React.Component {
     super(props);
 
     this.state = {
-      messages: [],
-      username: null
+      messages: this.props.messages || [],
+      username: null,
+      input: ""
     };
   }
 
@@ -25,14 +26,24 @@ class MainChat extends React.Component {
     if (e.keyCode === 13) {
       this.props.socket.emit("message", {
         userId: `anon-${this.props.socket.id}`,
-        msg: e.target.value
+        msg: this.state.input
+      });
+
+      this.setState({
+        input: ""
       });
     }
   };
 
+  onInputChange = e => {
+    this.setState({
+      input: e.target.value
+    });
+  };
+
   receiveMessage = message => {
     this.setState(prevState => ({
-      messages: prevState.messages.concat(message)
+      messages: prevState.messages.concat(JSON.parse(message))
     }));
   };
 
@@ -51,7 +62,9 @@ class MainChat extends React.Component {
         <input
           type="text"
           placeholder="Type something..."
+          value={this.state.input}
           onKeyUp={this.onKeyUp}
+          onChange={this.onInputChange}
         />
       </div>
     );

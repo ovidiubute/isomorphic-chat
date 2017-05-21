@@ -8,8 +8,24 @@ const path = require("path");
 const React = require("react");
 const { renderToString } = require("react-dom/server");
 const { createClient } = require("redis");
-const nano = require("nano")("couchdb");
+const nano = require("nano")("http://couchdb:5984");
 const MainChat = require("../client/main-chat").default;
+
+/**
+ * Get last 10 messages from the database
+ * to serve as starting point for SSR of our app
+ */
+async function getLastMessages(db) {
+  return new Promise((resolve, reject) => (
+    db.list({ limit: 10, include_docs: true }, (err, body) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(body.rows);
+    })
+  ));
+}
 
 // Init Redis connection
 const pub = createClient({
@@ -25,24 +41,8 @@ sub.subscribe("main-channel");
 // Init backend app
 const app = new Koa();
 
-// Connect to DB, create it if it doesn't exist
-const appDB = nano.db.use("isomorphic-chat");
-
-/**
- * Get last 100 messages from the database
- * to serve as starting point for SSR of our app
- */
-async function getLastMessages() {
-  await new Promise((resolve, reject) => {
-    appDB.list({ limit: 100 }, (err, body) => {
-      if (err) {
-        return reject(err);
-      }
-
-      return resolve(body);
-    });
-  });
-}
+// DB
+const messagesDB = nano.use("ic-messages");
 
 // Init socket.io chat endpoint
 const io = new IO();
@@ -59,9 +59,10 @@ sub.on("message", (channel, message) => {
 io.on("message", ctx => {
   const timestamp = Date.now();
 
-  pub.publish("main-channel", ctx.data);
-  appDB.insert({
+  pub.publish("main-channel", JSON.stringify(ctx.data));
+  messagesDB.insert({
     _id: `${ctx.data.userId}-${timestamp}`,
+    msg: ctx.data.msg,
     timestamp
   });
 });
@@ -79,8 +80,8 @@ app.use(serve(path.resolve(__dirname, "..", "client", "dist")));
 
 // Koa main handler
 app.use(async ctx => {
-  const messages = await getLastMessages();
-
+  const messages = await getLastMessages(messagesDB);
+  
   await ctx.render("main", {
     reactOutput: renderToString(
       React.createElement(MainChat, {

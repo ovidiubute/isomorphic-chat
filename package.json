@@ -43,6 +43,7 @@
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "redis": "^2.7.1",
+    "regenerator-runtime": "^0.10.5",
     "socket.io-client": "^1.7.3"
   },
   "scripts": {
