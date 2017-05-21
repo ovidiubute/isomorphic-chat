@@ -8,7 +8,7 @@ const path = require("path");
 const React = require("react");
 const { renderToString } = require("react-dom/server");
 const { createClient } = require("redis");
-const MongoClient = require('mongodb').MongoClient
+const MongoClient = require("mongodb").MongoClient;
 const MainChat = require("../client/main-chat").default;
 
 MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
@@ -52,10 +52,11 @@ MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
   // On incoming socket message, publish to Redis and save to DB
   io.on("message", ctx => {
     pub.publish("main-channel", JSON.stringify(ctx.data));
-    db.collection("messages").insert({
-      msg: ctx.data.msg,
-      timestamp: Date.now()
-    });
+    db.collection("messages").insert(
+      Object.assign({}, ctx.data, {
+        timestamp: Date.now()
+      })
+    );
   });
 
   // Attach render middleware
@@ -73,14 +74,13 @@ MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
   app.use(async ctx => {
     const messages = await getLastMessages();
 
-    console.log(messages);
-
     await ctx.render("main", {
       reactOutput: renderToString(
         React.createElement(MainChat, {
           messages
         })
-      )
+      ),
+      __state_messages__: JSON.stringify(messages)
     });
   });
 
@@ -92,5 +92,6 @@ MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
     app.listen(7001);
   }
 
+  // eslint-disable-next-line no-console
   app.on("error", err2 => console.error(err2.stack));
 });
