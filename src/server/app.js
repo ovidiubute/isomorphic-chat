@@ -16,7 +16,7 @@ const MainChat = require("../client/main-chat").default;
  * to serve as starting point for SSR of our app
  */
 async function getLastMessages(db) {
-  return new Promise((resolve, reject) => (
+  return new Promise((resolve, reject) =>
     db.list({ limit: 10, include_docs: true }, (err, body) => {
       if (err) {
         reject(err);
@@ -24,7 +24,7 @@ async function getLastMessages(db) {
 
       resolve(body.rows);
     })
-  ));
+  );
 }
 
 // Init Redis connection
@@ -81,7 +81,7 @@ app.use(serve(path.resolve(__dirname, "..", "client", "dist")));
 // Koa main handler
 app.use(async ctx => {
   const messages = await getLastMessages(messagesDB);
-  
+
   await ctx.render("main", {
     reactOutput: renderToString(
       React.createElement(MainChat, {

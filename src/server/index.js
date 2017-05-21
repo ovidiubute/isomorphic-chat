@@ -8,8 +8,8 @@ const nano = require("nano")("http://couchdb:5984");
  * @param {String} name DB name
  */
 async function ensureDatabase(name) {
-  await new Promise((resolve, reject) => {
-    return nano.db.list((err, body) => {
+  await new Promise((resolve, reject) =>
+    nano.db.list((err, body) => {
       if (err) {
         return reject(err);
       }
@@ -25,8 +25,8 @@ async function ensureDatabase(name) {
 
         return reject(err2);
       });
-    });
-  });
+    })
+  );
 }
 
 // Start backend
