@@ -4,4 +4,8 @@ import MainChat from "./main-chat";
 
 const socket = require("socket.io-client")();
 
-ReactDOM.render(<MainChat socket={socket} />, document.getElementById("root"));
+ReactDOM.render(
+  // eslint-disable-next-line no-underscore-dangle
+  <MainChat socket={socket} messages={window.__state_messages__} />,
+  document.getElementById("root")
+);
