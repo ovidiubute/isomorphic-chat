@@ -12,30 +12,16 @@ class MainChat extends React.Component {
 
     this.state = {
       messages: this.props.messages || [],
-      username: this.props.socket ? `anon-${this.props.socket.id}` : null,
       input: ""
     };
   }
 
   componentWillMount() {
-    if (this.props.socket) {
-      this.setState((prevState, props) => ({
-        username: props.socket ? `anon-${props.socket.id}` : null
-      }));
-      this.props.socket.on("message", this.receiveMessage);
-    }
+    this.props.socket.on("message", this.receiveMessage);
   }
 
   componentDidMount() {
     this.input.focus();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.socket) {
-      this.setState(() => ({
-        username: nextProps.socket ? `anon-${nextProps.socket.id}` : null
-      }));
-    }
   }
 
   componentDidUpdate() {
@@ -81,14 +67,14 @@ class MainChat extends React.Component {
                     this.messageElements.push(elm);
                   }}
                   style={
-                    m.userId === this.state.username
+                    m.userId === `anon-${this.props.socket.id}`
                       ? styles.ownComment
                       : styles.comment
                   }
                 >
                   <span
                     style={
-                      m.userId === this.state.username
+                      m.userId === `anon-${this.props.socket.id}`
                         ? styles.myIsername
                         : styles.username
                     }
@@ -113,5 +99,12 @@ class MainChat extends React.Component {
     );
   }
 }
+
+MainChat.defaultProps = {
+  socket: {
+    id: 42,
+    on: () => {}
+  }
+};
 
 export default MainChat;

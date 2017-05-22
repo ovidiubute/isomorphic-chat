@@ -43,7 +43,8 @@ const comment = {
 };
 
 const ownComment = Object.assign({}, comment, {
-  backgroundColor: "green"
+  backgroundColor: "lightgreen",
+  color: "white"
 });
 
 const input = {
