@@ -2,14 +2,30 @@
 <head>
     <title>Isomorphic chat via ReactJS</title>
     <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="description" content="Isomorphic web chat application built with React, Docker Cloud, MongoDB and Redis.">
     <meta name="keywords" content="react,isomorphic,universal,javascript,koa,mongodb,redis,docker,cloud">
     <meta name="author" content="Ovidiu Bute">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("topography.png") repeat;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: "Roboto", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        #root {
+            margin-top: 16px;
+        }
+    </style>
 </head>
 <body>
-<h3>Isomorphic React chat</h3>
 <%- body %>
 </body>
 </html>
