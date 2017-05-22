@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainChat should render with messages 1`] = `
+<div
+  style={
+    Object {
+      "height": "80vh",
+      "margin": "auto",
+      "maxHeight": "80vh",
+      "width": 600,
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "white",
+        "border": "1px solid #d3d3d3",
+        "borderRadius": 8,
+        "color": "rgb(89, 68, 68)",
+        "height": "inherit",
+        "maxHeight": "inherit",
+        "overflow": "scroll",
+      }
+    }
+  >
+    <ul
+      style={
+        Object {
+          "listStyleType": "none",
+          "margin": 0,
+          "padding": 8,
+        }
+      }
+    >
+      <li>
+        <p
+          style={
+            Object {
+              "borderRadius": 8,
+              "boxShadow": "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
+              "display": "inline-block",
+              "margin": "0 0 12px 0",
+              "overflowWrap": "break-word",
+              "padding": 8,
+              "userSelect": "text",
+              "verticalAlign": "baseline",
+            }
+          }
+        >
+          <span
+            style={
+              Object {
+                "color": "peru",
+                "fontSize": "x-small",
+                "verticalAlign": "middle",
+              }
+            }
+          >
+            daniel: 
+          </span>
+          <span>
+            Hi
+          </span>
+        </p>
+      </li>
+      <li>
+        <p
+          style={
+            Object {
+              "borderRadius": 8,
+              "boxShadow": "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
+              "display": "inline-block",
+              "margin": "0 0 12px 0",
+              "overflowWrap": "break-word",
+              "padding": 8,
+              "userSelect": "text",
+              "verticalAlign": "baseline",
+            }
+          }
+        >
+          <span
+            style={
+              Object {
+                "color": "peru",
+                "fontSize": "x-small",
+                "verticalAlign": "middle",
+              }
+            }
+          >
+            josh: 
+          </span>
+          <span>
+            Bye
+          </span>
+        </p>
+      </li>
+    </ul>
+  </div>
+  <input
+    onChange={[Function]}
+    onKeyUp={[Function]}
+    style={
+      Object {
+        "border": "1px solid #d3d3d3",
+        "fontSize": 24,
+        "marginTop": 4,
+        "outline": "none",
+        "padding": 4,
+        "width": 600,
+      }
+    }
+    type="text"
+    value=""
+  />
+</div>
+`;
