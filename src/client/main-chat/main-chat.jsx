@@ -2,13 +2,17 @@
 /* eslint-disable no-underscore-dangle */
 import React from "react";
 
+import styles from "./styles";
+
 class MainChat extends React.Component {
   constructor(props) {
     super(props);
 
+    this.messageElements = [];
+
     this.state = {
       messages: this.props.messages || [],
-      username: null,
+      username: this.props.socket ? `anon-${this.props.socket.id}` : null,
       input: ""
     };
   }
@@ -16,9 +20,27 @@ class MainChat extends React.Component {
   componentWillMount() {
     if (this.props.socket) {
       this.setState((prevState, props) => ({
-        username: `anon-${props.socket.id}`
+        username: props.socket ? `anon-${props.socket.id}` : null
       }));
       this.props.socket.on("message", this.receiveMessage);
+    }
+  }
+
+  componentDidMount() {
+    this.input.focus();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.socket) {
+      this.setState(() => ({
+        username: nextProps.socket ? `anon-${nextProps.socket.id}` : null
+      }));
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.messageElements.length) {
+      this.messageElements[this.messageElements.length - 1].scrollIntoView();
     }
   }
 
@@ -49,19 +71,40 @@ class MainChat extends React.Component {
 
   render() {
     return (
-      <div>
-        <ul>
-          {this.state.messages.map(m => (
-            <li key={m._id}>
-              <p>
-                {`${m.userId} : ${m.msg}`}
-              </p>
-            </li>
-          ))}
-        </ul>
+      <div style={styles.main}>
+        <div style={styles.container}>
+          <ul style={styles.list}>
+            {this.state.messages.map(m => (
+              <li key={m._id}>
+                <p
+                  ref={elm => {
+                    this.messageElements.push(elm);
+                  }}
+                  style={
+                    m.userId === this.state.username
+                      ? styles.ownComment
+                      : styles.comment
+                  }
+                >
+                  <span
+                    style={
+                      m.userId === this.state.username
+                        ? styles.myIsername
+                        : styles.username
+                    }
+                  >{`${m.userId}: `}</span>
+                  <span>{m.msg}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
         <input
+          ref={elm => {
+            this.input = elm;
+          }}
+          style={styles.input}
           type="text"
-          placeholder="Type something..."
           value={this.state.input}
           onKeyUp={this.onKeyUp}
           onChange={this.onInputChange}

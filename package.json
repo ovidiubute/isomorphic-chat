@@ -11,6 +11,7 @@
     "babel-preset-es2016": "^6.24.1",
     "babel-preset-es2017": "^6.24.1",
     "concurrently": "^3.4.0",
+    "css-loader": "^0.28.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-prettier": "^1.6.0",
@@ -24,6 +25,7 @@
     "lint-staged": "^3.4.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.1.0",
+    "style-loader": "^0.18.0",
     "webpack": "^2.4.1"
   },
   "dependencies": {
