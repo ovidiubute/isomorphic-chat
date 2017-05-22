@@ -11,13 +11,20 @@ export default {
       {
         test: /\.(js|jsx)$/,
         use: "babel-loader"
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader", options: { singleton: true } },
+          { loader: "css-loader" }
+        ]
       }
     ]
   },
   resolve: {
     extensions: [".js", ".jsx"]
   },
-  devtool: "cheap-module-eval-source-map",
+  devtool: "eval",
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000,

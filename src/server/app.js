@@ -71,7 +71,7 @@ MongoClient.connect("mongodb://mongodb/isomorphic-chat", (err, db) => {
     root: path.join(__dirname, "view"),
     layout: "template",
     viewExt: "ejs",
-    cache: true
+    cache: process.env.NODE_ENV === "production"
   });
 
   // Koa static handlers

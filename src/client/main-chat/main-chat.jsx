@@ -2,23 +2,31 @@
 /* eslint-disable no-underscore-dangle */
 import React from "react";
 
+import styles from "./styles";
+
 class MainChat extends React.Component {
   constructor(props) {
     super(props);
 
+    this.messageElements = [];
+
     this.state = {
       messages: this.props.messages || [],
-      username: null,
       input: ""
     };
   }
 
   componentWillMount() {
-    if (this.props.socket) {
-      this.setState((prevState, props) => ({
-        username: `anon-${props.socket.id}`
-      }));
-      this.props.socket.on("message", this.receiveMessage);
+    this.props.socket.on("message", this.receiveMessage);
+  }
+
+  componentDidMount() {
+    this.input.focus();
+  }
+
+  componentDidUpdate() {
+    if (this.messageElements.length) {
+      this.messageElements[this.messageElements.length - 1].scrollIntoView();
     }
   }
 
@@ -49,19 +57,40 @@ class MainChat extends React.Component {
 
   render() {
     return (
-      <div>
-        <ul>
-          {this.state.messages.map(m => (
-            <li key={m._id}>
-              <p>
-                {`${m.userId} : ${m.msg}`}
-              </p>
-            </li>
-          ))}
-        </ul>
+      <div style={styles.main}>
+        <div style={styles.container}>
+          <ul style={styles.list}>
+            {this.state.messages.map(m => (
+              <li key={m._id}>
+                <p
+                  ref={elm => {
+                    this.messageElements.push(elm);
+                  }}
+                  style={
+                    m.userId === `anon-${this.props.socket.id}`
+                      ? styles.ownComment
+                      : styles.comment
+                  }
+                >
+                  <span
+                    style={
+                      m.userId === `anon-${this.props.socket.id}`
+                        ? styles.myIsername
+                        : styles.username
+                    }
+                  >{`${m.userId}: `}</span>
+                  <span>{m.msg}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
         <input
+          ref={elm => {
+            this.input = elm;
+          }}
+          style={styles.input}
           type="text"
-          placeholder="Type something..."
           value={this.state.input}
           onKeyUp={this.onKeyUp}
           onChange={this.onInputChange}
@@ -70,5 +99,12 @@ class MainChat extends React.Component {
     );
   }
 }
+
+MainChat.defaultProps = {
+  socket: {
+    id: 42,
+    on: () => {}
+  }
+};
 
 export default MainChat;
