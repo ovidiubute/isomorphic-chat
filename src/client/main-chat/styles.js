@@ -33,7 +33,7 @@ const container = {
 
 const comment = {
   display: "inline-block",
-  boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
+  boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.07)",
   borderRadius: 8,
   overflowWrap: "break-word",
   padding: 8,
