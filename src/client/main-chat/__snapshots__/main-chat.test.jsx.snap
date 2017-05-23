@@ -103,15 +103,34 @@ exports[`MainChat should render with messages 1`] = `
     style={
       Object {
         "border": "1px solid #d3d3d3",
+        "float": "left",
         "fontSize": 24,
         "marginTop": 4,
         "outline": "none",
         "padding": 4,
-        "width": 600,
+        "width": 500,
       }
     }
     type="text"
     value=""
   />
+  <button
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#abe37f",
+        "border": 0,
+        "color": "white",
+        "fontSize": 16,
+        "height": 38,
+        "marginTop": 4,
+        "outline": "none",
+        "width": 100,
+      }
+    }
+    type="button"
+  >
+    SEND
+  </button>
 </div>
 `;
