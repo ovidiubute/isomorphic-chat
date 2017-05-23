@@ -43,7 +43,7 @@ const comment = {
 };
 
 const ownComment = Object.assign({}, comment, {
-  backgroundColor: "lightgreen",
+  backgroundColor: "#abe37f",
   color: "white"
 });
 
@@ -51,9 +51,21 @@ const input = {
   fontSize: 24,
   marginTop: 4,
   padding: 4,
-  width: 600,
+  width: 500,
   border: "1px solid #d3d3d3",
-  outline: "none"
+  outline: "none",
+  float: "left"
+};
+
+const send = {
+  width: 100,
+  outline: "none",
+  backgroundColor: "#abe37f",
+  color: "white",
+  marginTop: 4,
+  height: 38,
+  fontSize: 16,
+  border: 0
 };
 
 export default {
@@ -64,5 +76,6 @@ export default {
   myUsername,
   comment,
   ownComment,
-  input
+  input,
+  send
 };
