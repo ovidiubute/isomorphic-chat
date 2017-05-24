@@ -9,9 +9,10 @@ describe("MainChat", () => {
 
     const result = r.getRenderOutput();
     expect(result.type).toBe("div");
-    expect(result.props.children).toHaveLength(2);
+    expect(result.props.children).toHaveLength(3);
     expect(result.props.children[0].type).toBe("div");
     expect(result.props.children[1].type).toBe("input");
+    expect(result.props.children[2].type).toBe("button");
   });
 
   it("should render with messages", () => {
