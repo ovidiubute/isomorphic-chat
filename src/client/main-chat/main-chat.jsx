@@ -51,6 +51,8 @@ class MainChat extends React.Component {
     this.setState({
       input: ""
     });
+
+    this.input.focus();
   };
 
   receiveMessage = message => {
