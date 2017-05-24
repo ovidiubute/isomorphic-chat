@@ -32,14 +32,7 @@ class MainChat extends React.Component {
 
   onKeyUp = e => {
     if (e.keyCode === 13) {
-      this.props.socket.emit("message", {
-        userId: `anon-${this.props.socket.id}`,
-        msg: this.state.input
-      });
-
-      this.setState({
-        input: ""
-      });
+      this.sendMessage();
     }
   };
 
@@ -47,6 +40,19 @@ class MainChat extends React.Component {
     this.setState({
       input: e.target.value
     });
+  };
+
+  sendMessage = () => {
+    this.props.socket.emit("message", {
+      userId: `anon-${this.props.socket.id}`,
+      msg: this.state.input
+    });
+
+    this.setState({
+      input: ""
+    });
+
+    this.input.focus();
   };
 
   receiveMessage = message => {
@@ -95,6 +101,9 @@ class MainChat extends React.Component {
           onKeyUp={this.onKeyUp}
           onChange={this.onInputChange}
         />
+        <button style={styles.send} type="button" onClick={this.sendMessage}>
+          SEND
+        </button>
       </div>
     );
   }
