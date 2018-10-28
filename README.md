@@ -19,4 +19,4 @@ This will watch for changes in your repo, so you can now navigate to the IP assi
 Click the `Deploy to Docker Cloud` button. Register an account (it's *almost* free), connect a Cloud Provider and you're good to go!
 
 ## License
-MIT
+[MIT](./LICENSE)
